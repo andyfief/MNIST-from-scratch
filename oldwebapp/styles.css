@@ -1,0 +1,155 @@
+/* styles.css - MNIST Digit Recognition App Styles */
+
+/* Main layout styles */
+body {
+    font-family: Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.main-content {
+    flex: 1;
+    min-width: 400px;
+    text-align: center;
+    padding-right: 20px;
+}
+
+.sidebar {
+    width: 300px;
+    padding: 20px;
+    border-left: 1px solid #ccc;
+    margin-left: 20px;
+}
+
+/* Canvas styles */
+#canvas-container {
+    margin: 20px auto;
+    position: relative;
+    width: 280px;
+    height: 280px;
+}
+
+#digit-canvas {
+    border: 2px solid #333;
+    border-radius: 5px;
+    cursor: crosshair;
+    background-color: black;
+    width: 280px;
+    height: 280px;
+}
+
+#sample-canvas {
+    border: 2px solid #333;
+    border-radius: 5px;
+    background-color: black;
+    width: 280px;
+    height: 280px;
+}
+
+#bounding-box {
+    position: absolute;
+    border: 2px dashed #015516;
+    pointer-events: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 240px;
+    height: 240px;
+}
+
+/* Button styles */
+.button {
+    padding: 10px 20px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4285f4;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #3367d6;
+}
+
+/* Results display */
+#result {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#prediction-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.probability-bars {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 200px;
+    width: 100%;
+    max-width: 500px;
+    margin-top: 20px;
+}
+
+.bar {
+    width: 30px;
+    margin: 0 5px;
+    background-color: #4285f4;
+    transition: height 0.3s;
+}
+
+.bar-label {
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+/* Loading indicator */
+.loading {
+    display: none;
+    margin: 20px auto;
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: #4285f4;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+    
+    .main-content, .sidebar {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .sidebar {
+        border-left: none;
+        border-top: 1px solid #ccc;
+        margin-top: 20px;
+        padding-top: 20px;
+    }
+}

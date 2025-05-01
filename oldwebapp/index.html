@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MNIST Digit Recognition</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Sample MNIST Digit</h2>
+        <p style="white-space: pre-line;">
+            MNIST Sample
+            
+            </p>
+        <canvas id="sample-canvas" width="280" height="280"></canvas>
+    </div>
+    
+    <div class="main-content">
+        <h1>MNIST Digit Recognition</h1>
+        <p>Draw a single digit (0-9) in the green box below and click "Predict"</p>
+        <p>Try to have your number take up the whole green box, but stay within it!</p>
+        
+        <div id="canvas-container">
+            <canvas id="digit-canvas" width="280" height="280"></canvas>
+            <div id="bounding-box"></div>
+        </div>
+        
+        <div>
+            <button class="button" id="predict-btn">Predict</button>
+            <button class="button" id="clear-btn">Clear</button>
+        </div>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Predicting...</p>
+        </div>
+        
+        <div id="prediction-container">
+            <div id="result">Draw a digit and click "Predict"</div>
+            
+            <div class="probability-bars" id="probability-bars">
+                <!-- Bars will be generated dynamically -->
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
+
