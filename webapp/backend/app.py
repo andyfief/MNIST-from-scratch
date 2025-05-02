@@ -104,24 +104,110 @@ def predict():
         
         # Convert to numpy array and normalize
         image_array = np.array(image).astype('float32')
+
+        print(image_array)
         
         # flips it to white on black and normalizes values
         image_array = np.where(image_array < 100, 255, 0)
+
+        def findCenter(img):
+            #image dimensions
+            height, width = img.shape
+
+            # Top of drawn number (scan top-down)
+            top = 0
+            while top < height:
+                if any(img[top, i] > 0 for i in range(width)):
+                    break
+                top += 1
+
+            # Bottom of drawn number (scan bottom-up)
+            bottom = height - 1
+            while bottom >= 0:
+                if any(img[bottom, i] > 0 for i in range(width)):
+                    break
+                bottom -= 1
+
+            # Left of drawn number (scan left-right)
+            left = 0
+            while left < width:
+                if any(img[i, left] > 0 for i in range(height)):
+                    break
+                left += 1
+
+            # Right of drawn number (scan right-left)
+            right = width - 1
+            while right >= 0:
+                if any(img[i, right] > 0 for i in range(height)):
+                    break
+                right -= 1
+
+            #height of the drawn number
+            numberHeight = bottom - top
+            numberWidth = right - left
+
+            # center of the drawn number
+            Y = top + (numberHeight / 2)
+            X = left + (numberWidth / 2)
+
+            imageCenter = [height / 2, width / 2]
+            numberCenter = [X, Y]
+
+            offset = [imageCenter[0] - numberCenter[0], imageCenter[1] - numberCenter[1]]
+
+            return offset
+
+        def shiftImage(img, offset):
+            height, width = img.shape
+            
+            # Create a new blank image
+            shifted_img = np.zeros((height, width), dtype=img.dtype)
+            
+            # Round offset values to nearest whole pixel (or 0.5 if needed)
+            x_offset = round(offset[0])
+            y_offset = round(offset[1])
+            
+            if x_offset >= 0:
+                src_x_range = slice(0, width - x_offset)
+                dst_x_range = slice(x_offset, width)
+            else:
+                src_x_range = slice(-x_offset, width)
+                dst_x_range = slice(0, width + x_offset)
+                
+            if y_offset >= 0:
+                src_y_range = slice(0, height - y_offset)
+                dst_y_range = slice(y_offset, height)
+            else:
+                src_y_range = slice(-y_offset, height)
+                dst_y_range = slice(0, height + y_offset)
+            
+            # Copy the relevant part of the image
+            shifted_img[dst_y_range, dst_x_range] = img[src_y_range, src_x_range]
+
+            return shifted_img
+        
+        offset = findCenter(image_array)
+        image_array = shiftImage(image_array, offset)
     
         # get the trinary black-grey-white image format that we trained the model on. Grey values are edges.
-        for i in range(0, 28):
-            for j in range(0, 28):
-                if(image_array[i, j] == 255 and image_array[i + 1, j] == 0):
-                    image_array[i + 1, j] = 128
-                if(image_array[i, j] == 255 and image_array[i - 1, j] == 0):
-                    image_array[i - 1, j] = 128
-                if(image_array[i, j] == 255 and image_array[i, j + 1] == 0):
-                    image_array[i, j + 1] = 128
-                if(image_array[i, j] == 255 and image_array[i, j - 1] == 0):
-                    image_array[i, j - 1] = 128
+        for i in range(28):
+            for j in range(28):
+                if image_array[i, j] == 255:
+                    if i + 1 < 28 and image_array[i + 1, j] == 0:
+                        image_array[i + 1, j] = 128
+                    if i - 1 >= 0 and image_array[i - 1, j] == 0:
+                        image_array[i - 1, j] = 128
+                    if j + 1 < 28 and image_array[i, j + 1] == 0:
+                        image_array[i, j + 1] = 128
+                    if j - 1 >= 0 and image_array[i, j - 1] == 0:
+                        image_array[i, j - 1] = 128
 
         # Flatten the image to 784x1 vector (as expected by your model)
         image_array = image_array.flatten()
+        import csv
+        with open('view.csv', mode='w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(image_array)
         
         # Make prediction using your model
         prediction = model.forward_pass(image_array)

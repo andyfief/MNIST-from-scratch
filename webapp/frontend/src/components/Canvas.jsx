@@ -19,8 +19,8 @@ function Canvas( {onSubmit }){
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
 
-    const scaleX = width / (width * 8);
-    const scaleY = height / (height * 8);
+    const scaleX = width / (width * 6);
+    const scaleY = height / (height * 6);
     const x = e.nativeEvent.offsetX * scaleX;
     const y = e.nativeEvent.offsetY * scaleY;
     ctx.moveTo(x, y);
@@ -38,8 +38,8 @@ function Canvas( {onSubmit }){
     ctx.lineCap = 'round';
     ctx.strokeStyle = 'black';
 
-    const scaleX = width / (width * 8);
-    const scaleY = height / (height * 8);
+    const scaleX = width / (width * 6);
+    const scaleY = height / (height * 6);
     const x = e.nativeEvent.offsetX * scaleX;
     const y = e.nativeEvent.offsetY * scaleY;
     ctx.lineTo(x, y);
@@ -67,20 +67,20 @@ function Canvas( {onSubmit }){
   };
 
   return (
-    <div>
+    <div style={{paddingLeft: '55px', paddingTop: '20px' }}>
       <canvas
         ref={canvasRef}
         width={width}
         height={height}
-        style={{ border: '2px dashed black', width: `${width * 8}px`, height: `${height * 8}px`, imageRendering: 'pixelated' }}
+        style={{ border: '2px dashed rgb(19, 0, 233)', width: `${width * 6}px`, height: `${height * 6}px`, imageRendering: 'pixelated'}}
         onMouseDown={startDrawing}
         onMouseMove={draw}
         onMouseUp={stopDrawing}
         onMouseLeave={stopDrawing}
       />
-      <div style={{ marginTop: '5px' }}>
-        <button onClick={clearCanvas}>Clear</button>
-        <button onClick={getImageData}>Predict</button>
+      <div style={{ marginTop: '3px' }}>
+        <button onClick={clearCanvas} style={{ color: 'rgb(19, 0, 233)', backgroundColor: 'rgb(255, 255, 255)', border: '2px solid rgb(19, 0, 233)', marginRight: '2px', fontFamily: 'Courier New, monospace' }}>Clear</button>
+        <button onClick={getImageData} style={{ color: 'rgb(19, 0, 233)', backgroundColor: 'rgb(255, 255, 255)', border: '2px solid rgb(19, 0, 233)', marginLeft: '2px', fontFamily: 'Courier New, monospace' }}>Predict</button>
       </div>
     </div>
   );

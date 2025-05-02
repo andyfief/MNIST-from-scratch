@@ -5,7 +5,7 @@ const PredictionResult = ({ result }) => {
 
     const order = probabilities
     .map((confidence, index) => ({ digit: index, confidence }));
-    //.sort((a, b) => b.confidence - a.confidence)
+    /* .sort((a, b) => b.confidence - a.confidence) */
     
     return (
         <div className="prediction-result">
@@ -19,11 +19,11 @@ const PredictionResult = ({ result }) => {
                         className="bar"
                         style={{
                             width: `${Math.round(confidence * 100)}%`,
-                            backgroundColor: digit === predicted_digit ? '#4CAF50' : '#ddd'
+                            backgroundColor: '#00ff41'
                         }}
                         />
                     </div>
-                    <div className="percentage">{(confidence * 100).toFixed(2)}%</div>
+                    <div className="percentage">{(confidence * 100).toFixed(2).padStart(5, '0')}%</div>
                     </div>
                 ))}
             </div>
