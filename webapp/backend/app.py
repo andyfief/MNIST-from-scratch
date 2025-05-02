@@ -104,10 +104,10 @@ def predict():
         
         # Convert to numpy array and normalize
         image_array = np.array(image).astype('float32')
-
+        
         # flips it to white on black and normalizes values
         image_array = np.where(image_array < 100, 255, 0)
-        
+    
         # get the trinary black-grey-white image format that we trained the model on. Grey values are edges.
         for i in range(0, 28):
             for j in range(0, 28):

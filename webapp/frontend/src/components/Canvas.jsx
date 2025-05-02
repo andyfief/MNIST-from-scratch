@@ -10,7 +10,7 @@ function Canvas( {onSubmit }){
   React.useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = 'rgb(93, 212, 248)';
     ctx.fillRect(0, 0, width, height);
   }, []);
 
@@ -19,8 +19,8 @@ function Canvas( {onSubmit }){
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
 
-    const scaleX = width / (width * 10);
-    const scaleY = height / (height * 10);
+    const scaleX = width / (width * 8);
+    const scaleY = height / (height * 8);
     const x = e.nativeEvent.offsetX * scaleX;
     const y = e.nativeEvent.offsetY * scaleY;
     ctx.moveTo(x, y);
@@ -38,8 +38,8 @@ function Canvas( {onSubmit }){
     ctx.lineCap = 'round';
     ctx.strokeStyle = 'black';
 
-    const scaleX = width / (width * 10);
-    const scaleY = height / (height * 10);
+    const scaleX = width / (width * 8);
+    const scaleY = height / (height * 8);
     const x = e.nativeEvent.offsetX * scaleX;
     const y = e.nativeEvent.offsetY * scaleY;
     ctx.lineTo(x, y);
@@ -54,7 +54,7 @@ function Canvas( {onSubmit }){
   const clearCanvas = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = 'rgb(93, 212, 248)';
     ctx.fillRect(0, 0, width, height);
   };
 
@@ -72,13 +72,13 @@ function Canvas( {onSubmit }){
         ref={canvasRef}
         width={width}
         height={height}
-        style={{ border: '1px solid black', width: `${width * 10}px`, height: `${height * 10}px`, imageRendering: 'pixelated' }}
+        style={{ border: '2px dashed black', width: `${width * 8}px`, height: `${height * 8}px`, imageRendering: 'pixelated' }}
         onMouseDown={startDrawing}
         onMouseMove={draw}
         onMouseUp={stopDrawing}
         onMouseLeave={stopDrawing}
       />
-      <div style={{ marginTop: '10px' }}>
+      <div style={{ marginTop: '5px' }}>
         <button onClick={clearCanvas}>Clear</button>
         <button onClick={getImageData}>Predict</button>
       </div>
