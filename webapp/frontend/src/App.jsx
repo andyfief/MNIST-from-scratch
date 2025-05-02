@@ -35,6 +35,7 @@ function App() {
         </div>
 
         <div className="background-image"></div>
+        
         {error && <p className="error">{error}</p>}
     </div>
       <div className="information-section">
