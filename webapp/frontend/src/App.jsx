@@ -34,10 +34,12 @@ function App() {
         <div className="prediction-screen">
           {prediction && <PredictionResult result={prediction} />}
         </div>
+        
+        <div className="background-image">
         <div className="scrollDown">
-          <ScrollDownPtr />
+            <ScrollDownPtr />
+          </div>
         </div>
-        <div className="background-image"></div>
         
         {error && <p className="error">{error}</p>}
     </div>

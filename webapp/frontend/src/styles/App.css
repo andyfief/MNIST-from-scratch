@@ -168,22 +168,21 @@ html, body {
 }
 
 .scroll-down-indicator {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  position: absolute;
   align-items: center;
-  gap: 4px;
+  left: 48%;
+  top: 85%;
   z-index: 1000;
   pointer-events: none;
 }
 
 .arrow {
-  font-size: 38px;
+  font-size: 45px;
   color: #00ff41;
   animation: bounce 1.5s infinite;
   opacity: 0.7;
+  font-weight: 600;
 }
 
 .hidden {

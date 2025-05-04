@@ -82,63 +82,51 @@ CORS(app)  # Enable CORS for all routes
 model = DNN(sizes=[784, 128, 64, 10])
 model.load_weights('./models/trinary_mnist_model_weights.pkl')  # Update with your actual weights file path
 
-@app.route('/predict', methods=['POST'])
-def predict():
-    try:
-        # Get the image data from the request
-        image_data = request.json.get('image')
-        if not image_data:
-            return jsonify({'error': 'No image data received'}), 400
-        
-        # Remove the data URL prefix if present
+def processRequest(image_data):
+    # Remove the data URL prefix if present
         if image_data.startswith('data:image/'):
             image_data = image_data.split(',')[1]
-        
         # Decode the base64 image
         decoded = base64.b64decode(image_data)
-        
         image = Image.open(io.BytesIO(decoded)).convert('L')  # Convert to grayscale
-        
         # Resize to 28x28 (MNIST standard size)
         image = image.resize((28, 28))
-        
         # Convert to numpy array and normalize
         image_array = np.array(image).astype('float32')
-
-        print(image_array)
-        
         # flips it to white on black and normalizes values
         image_array = np.where(image_array < 100, 255, 0)
 
-        def findCenter(img):
+        return image_array
+
+def findCenter(image):
             #image dimensions
-            height, width = img.shape
+            height, width = image.shape
 
             # Top of drawn number (scan top-down)
             top = 0
             while top < height:
-                if any(img[top, i] > 0 for i in range(width)):
+                if any(image[top, i] > 0 for i in range(width)):
                     break
                 top += 1
 
             # Bottom of drawn number (scan bottom-up)
             bottom = height - 1
             while bottom >= 0:
-                if any(img[bottom, i] > 0 for i in range(width)):
+                if any(image[bottom, i] > 0 for i in range(width)):
                     break
                 bottom -= 1
 
             # Left of drawn number (scan left-right)
             left = 0
             while left < width:
-                if any(img[i, left] > 0 for i in range(height)):
+                if any(image[i, left] > 0 for i in range(height)):
                     break
                 left += 1
 
             # Right of drawn number (scan right-left)
             right = width - 1
             while right >= 0:
-                if any(img[i, right] > 0 for i in range(height)):
+                if any(image[i, right] > 0 for i in range(height)):
                     break
                 right -= 1
 
@@ -157,11 +145,11 @@ def predict():
 
             return offset
 
-        def shiftImage(img, offset):
-            height, width = img.shape
+def shiftImage(image, offset):
+            height, width = image.shape
             
             # Create a new blank image
-            shifted_img = np.zeros((height, width), dtype=img.dtype)
+            shifted_image = np.zeros((height, width), dtype=image.dtype)
             
             # Round offset values to nearest whole pixel (or 0.5 if needed)
             x_offset = round(offset[0])
@@ -182,34 +170,56 @@ def predict():
                 dst_y_range = slice(0, height + y_offset)
             
             # Copy the relevant part of the image
-            shifted_img[dst_y_range, dst_x_range] = img[src_y_range, src_x_range]
+            shifted_image[dst_y_range, dst_x_range] = image[src_y_range, src_x_range]
 
-            return shifted_img
-        
-        offset = findCenter(image_array)
-        image_array = shiftImage(image_array, offset)
-    
-        # get the trinary black-grey-white image format that we trained the model on. Grey values are edges.
+            return shifted_image
+
+def softenEdges(image):
+      # get the trinary black-grey-white image format that we trained the model on. Grey values are edges.
         for i in range(28):
             for j in range(28):
-                if image_array[i, j] == 255:
-                    if i + 1 < 28 and image_array[i + 1, j] == 0:
-                        image_array[i + 1, j] = 128
-                    if i - 1 >= 0 and image_array[i - 1, j] == 0:
-                        image_array[i - 1, j] = 128
-                    if j + 1 < 28 and image_array[i, j + 1] == 0:
-                        image_array[i, j + 1] = 128
-                    if j - 1 >= 0 and image_array[i, j - 1] == 0:
-                        image_array[i, j - 1] = 128
+                if image[i, j] == 255:
+                    if i + 1 < 28 and image[i + 1, j] == 0:
+                        image[i + 1, j] = 128
+                    if i - 1 >= 0 and image[i - 1, j] == 0:
+                        image[i - 1, j] = 128
+                    if j + 1 < 28 and image[i, j + 1] == 0:
+                        image[i, j + 1] = 128
+                    if j - 1 >= 0 and image[i, j - 1] == 0:
+                        image[i, j - 1] = 128
+        return image
 
-        # Flatten the image to 784x1 vector (as expected by your model)
-        image_array = image_array.flatten()
-        import csv
-        with open('view.csv', mode='w', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow(image_array)
+def viewInFile(image_array):
+    #image_array = image_array.flatten() if needed
+    import csv
+    with open('view.csv', mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(image_array)
+     
+    
+@app.route('/predict', methods=['POST'])
+def predict():
+    try:
+        # Get the image data from the request
+        image_data = request.json.get('image')
+        if not image_data:
+            return jsonify({'error': 'No image data received'}), 400
         
-        # Make prediction using your model
+        image_array = processRequest(image_data)
+
+        #find the offset of the image's center from the center of the grid
+        offset = findCenter(image_array)
+        
+        #shift drawn image to the center of the grid
+        image_array = shiftImage(image_array, offset)
+
+        #add grey on the outside of the white image to indicate edges
+        image_array = softenEdges(image_array)
+    
+        # Flatten the image to 784x1 vector
+        image_array = image_array.flatten()
+        
+        # Make prediction using model
         prediction = model.forward_pass(image_array)
         predicted_class = np.argmax(prediction)
         prediction_probabilities = prediction
