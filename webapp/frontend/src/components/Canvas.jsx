@@ -67,7 +67,7 @@ function Canvas( {onSubmit }){
   };
 
   return (
-    <div style={{paddingLeft: '55px', paddingTop: '20px' }}>
+    <div className='canvas-container'>
       <canvas
         ref={canvasRef}
         width={width}

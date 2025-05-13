@@ -40,8 +40,8 @@ html, body {
   width: 25%;
   height: 30%;
   position: absolute;
-  top: 41%;
-  left: 25%;
+  top: 43%;
+  left: 26.5%;
   background-color: rgb(93, 212, 248);
   padding-top: 20px;
   z-index: 1; /* Below the background image */
