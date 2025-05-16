@@ -239,3 +239,18 @@ body {
     overflow-x: hidden; /* Hide horizontal scrollbar on larger screens */
   }
 }
+
+@media screen and (max-width: 1600px) {
+  html, body {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  #root,
+  .App,
+  .page-container,
+  .background-image {
+    min-width: 1600px; /* Prevent layout from breaking */
+    width: 1600px;
+  }
+}
