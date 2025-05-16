@@ -74,6 +74,15 @@ body {
   z-index: 1; /* Below the background image, as requested */
 }
 
+.prediction_welcome {
+  font-family: 'Courier New', monospace;
+  color: rgb(19, 0, 233);
+  padding-top: 50px;
+  padding-right: 90px;
+  font-size: 25px;
+  font-weight: 2px;
+}
+
 .prediction-result {
   transform: scale(0.9);
   width: 80%;
