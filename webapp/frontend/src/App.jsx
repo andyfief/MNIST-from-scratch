@@ -50,7 +50,7 @@ function App() {
       <div className="information-section">
           <p id = 'tutorialLine'>Draw a digit in the left screen and click "Predict" to see the neural network classify your handwriting!</p>
           <h3 id='tips'>Tips</h3>
-          <p className = 'tipsLines'> Fill up most of the square.</p>
+          <p className = 'tipsLines'> Draw a large number.</p>
           <p className = 'tipsLines'> Use a straight |, without a base.</p>
           <p className = 'tipsLines'> Use an empty 0, without the slash.</p>
           <h3>About the MNIST Dataset</h3>
