@@ -16,7 +16,11 @@ function App() {
 
     try{
       const result = await predictDigit(imageData);
-      setPrediction(result);
+       if (result.predicted_digit === 'none') {
+        setPrediction(null);
+      } else {
+        setPrediction(result);
+  }
     } catch (error) {
       setError('Error predicting digit. Please try again');
       console.error(error);
@@ -32,6 +36,7 @@ function App() {
           <Canvas onSubmit={handleSubmit} />
         </div>
         <div className="prediction-screen">
+          {!prediction && <div className="prediction_welcome">Draw a digit and <br />click "Predict" <br /> ... </div>}
           {prediction && <PredictionResult result={prediction} />}
         </div>
         <div className="background-image">

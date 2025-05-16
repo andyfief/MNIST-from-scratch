@@ -206,6 +206,12 @@ def predict():
             return jsonify({'error': 'No image data received'}), 400
         
         image_array = processRequest(image_data)
+        if(image_array.sum() < 5000):
+            return jsonify({
+                'predicted_digit': 'none'
+            })
+
+        #if(image_array.sum() < )
 
         #find the offset of the image's center from the center of the grid
         offset = findCenter(image_array)
