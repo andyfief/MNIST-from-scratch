@@ -1,69 +1,86 @@
-html, body {
+html {
   margin: 0;
   padding: 0;
   height: 100%;
   background-color: rgb(1, 0, 12);
   color: white;
+  /* Remove overflow settings from html */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  /* Only set overflow on body, not on both html and body */
+  overflow-x: auto; /* Allow horizontal scrolling when needed */
+  overflow-y: auto; /* Allow vertical scrolling when needed */
+  
+  /* Prevent content from stretching */
+  min-height: 900px; /* Fixed minimum height based on your design */
 }
 
 #root {
   margin: 0 auto;
   padding-top: 40px;
   text-align: center;
+  width: 1600px; /* Fixed width */
+  min-height: 900px; /* Fixed minimum height */
 }
 
 .App {
   position: relative;
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
+  height: 900px; /* Fixed height instead of 100vh */
+  width: 1600px; /* Fixed width */
+  overflow: visible; /* Allow scrolling */
 }
 
 .page-container {
-  width: 100%;
+  width: 1600px; /* Fixed width */
+  position: relative;
+  min-height: 900px; /* Fixed minimum height */
 }
 
 .background-image {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh; /* Exactly viewport height */
+  width: 1600px; /* Fixed width */
+  height: 900px; /* Fixed height instead of 100vh */
   background-image: url('../../monitors2.png');
-  background-size: cover;
-  background-position: center;
-  z-index: 1; /* Lower than information section */
-  pointer-events: none; /* Allow clicks to pass through */
+  background-size: contain; /* Changed from cover to contain */
+  background-repeat: no-repeat;
+  background-position: center top;
+  z-index: 2; /* Higher z-index to be above the screen elements */
+  pointer-events: none;
 }
 
 .canvas-screen {
-  width: 25%;
-  height: 30%;
+  width: 400px; /* Fixed width in pixels */
+  height: 300px; /* Fixed height in pixels */
   position: absolute;
-  top: 43%;
-  left: 26.5%;
+  top: 375px; /* Fixed position in pixels (43% of 900px) */
+  left: 424px; /* Fixed position instead of percentage */
   background-color: rgb(93, 212, 248);
   padding-top: 20px;
-  z-index: 1; /* Below the background image */
+  z-index: 1; /* Below the background image, as requested */
 }
 
 .prediction-screen {
-  width: 25%;
-  height: 40%;
-  top: 35%;
-  right: 22%;
+  width: 400px; /* Fixed width in pixels */
+  height: 300px; /* Fixed height in pixels */
+  top: 380px; /* Fixed position in pixels (35% of 900px) */
+  right: 352px; /* Fixed position instead of percentage */
   position: absolute;
   background-color: rgb(93, 212, 248);
-  z-index: 1; /* Below the background image */
+  z-index: 1; /* Below the background image, as requested */
 }
 
 .prediction-result {
-  width: 85%;
+  transform: scale(0.9);
+  width: 80%;
   font-family: 'Courier New', monospace;
 }
 
 .prediction-result h2 {
-  padding-top: 95px;
   padding-right: 25px;
   margin: 0px;
   font-size: 1.2rem;
@@ -117,7 +134,7 @@ html, body {
 
 .information-section {
   width: 60%;
-  margin: 40px auto; /* Space above and below */
+  margin: 40px auto;
   background-color: rgba(1, 0, 12, 0.8);
   border: 2px solid rgb(19, 0, 233);
   border-radius: 5px;
@@ -126,6 +143,7 @@ html, body {
   font-family: 'Courier New', monospace;
   text-align: left;
   z-index: 2;
+  position: relative; /* Ensure proper z-index stacking */
 }
 
 .information-section h3 {
@@ -191,7 +209,6 @@ html, body {
   pointer-events: none;
 }
 
-
 @keyframes bounce {
   0%, 100% {
     transform: translateY(0);
@@ -205,4 +222,11 @@ html, body {
 
 .error {
   color: #ff6b6b;
+}
+
+/* Media query to hide scrollbars on larger screens */
+@media screen and (min-width: 1650px) {
+  body {
+    overflow-x: hidden; /* Hide horizontal scrollbar on larger screens */
+  }
 }

@@ -63,7 +63,7 @@ function App() {
           </p>
           <h3>About the Frontend and Preprocessing</h3>
           <p>
-            The grid on the left screen is made with 
+            The grid on the left screen is made with a simple HTML canvas. When the user presses submit, the 
           </p>
       </div>
     </div>
