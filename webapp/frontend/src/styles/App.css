@@ -1,14 +1,19 @@
-html, body {
+html {
   margin: 0;
   padding: 0;
   height: 100%;
   background-color: rgb(1, 0, 12);
   color: white;
-  overflow-x: auto; /* Allow horizontal scrolling when needed */
-  overflow-y: auto; /* Allow vertical scrolling when needed */
+  /* Remove overflow settings from html */
 }
 
 body {
+  margin: 0;
+  padding: 0;
+  /* Only set overflow on body, not on both html and body */
+  overflow-x: auto; /* Allow horizontal scrolling when needed */
+  overflow-y: auto; /* Allow vertical scrolling when needed */
+  
   /* Prevent content from stretching */
   min-height: 900px; /* Fixed minimum height based on your design */
 }
@@ -52,7 +57,7 @@ body {
   width: 400px; /* Fixed width in pixels */
   height: 300px; /* Fixed height in pixels */
   position: absolute;
-  top: 387px; /* Fixed position in pixels (43% of 900px) */
+  top: 375px; /* Fixed position in pixels (43% of 900px) */
   left: 424px; /* Fixed position instead of percentage */
   background-color: rgb(93, 212, 248);
   padding-top: 20px;
@@ -61,8 +66,8 @@ body {
 
 .prediction-screen {
   width: 400px; /* Fixed width in pixels */
-  height: 380px; /* Fixed height in pixels */
-  top: 315px; /* Fixed position in pixels (35% of 900px) */
+  height: 300px; /* Fixed height in pixels */
+  top: 380px; /* Fixed position in pixels (35% of 900px) */
   right: 352px; /* Fixed position instead of percentage */
   position: absolute;
   background-color: rgb(93, 212, 248);
@@ -70,12 +75,12 @@ body {
 }
 
 .prediction-result {
-  width: 85%;
+  transform: scale(0.9);
+  width: 80%;
   font-family: 'Courier New', monospace;
 }
 
 .prediction-result h2 {
-  padding-top: 95px;
   padding-right: 25px;
   margin: 0px;
   font-size: 1.2rem;
@@ -220,8 +225,8 @@ body {
 }
 
 /* Media query to hide scrollbars on larger screens */
-@media screen and (min-width: 1200px) {
-  html, body {
+@media screen and (min-width: 1650px) {
+  body {
     overflow-x: hidden; /* Hide horizontal scrollbar on larger screens */
   }
 }

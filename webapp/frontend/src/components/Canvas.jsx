@@ -19,8 +19,8 @@ function Canvas( {onSubmit }){
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
 
-    const scaleX = width / (width * 6);
-    const scaleY = height / (height * 6);
+    const scaleX = width / (width * 5);
+    const scaleY = height / (height * 5);
     const x = e.nativeEvent.offsetX * scaleX;
     const y = e.nativeEvent.offsetY * scaleY;
     ctx.moveTo(x, y);
@@ -38,8 +38,8 @@ function Canvas( {onSubmit }){
     ctx.lineCap = 'round';
     ctx.strokeStyle = 'black';
 
-    const scaleX = width / (width * 6);
-    const scaleY = height / (height * 6);
+    const scaleX = width / (width * 5);
+    const scaleY = height / (height * 5);
     const x = e.nativeEvent.offsetX * scaleX;
     const y = e.nativeEvent.offsetY * scaleY;
     ctx.lineTo(x, y);
@@ -72,7 +72,7 @@ function Canvas( {onSubmit }){
         ref={canvasRef}
         width={width}
         height={height}
-        style={{ border: '2px dashed rgb(19, 0, 233)', width: `${width * 6}px`, height: `${height * 6}px`, imageRendering: 'pixelated'}}
+        style={{ border: '2px dashed rgb(19, 0, 233)', width: `${width * 5}px`, height: `${height * 5}px`, imageRendering: 'pixelated'}}
         onMouseDown={startDrawing}
         onMouseMove={draw}
         onMouseUp={stopDrawing}
