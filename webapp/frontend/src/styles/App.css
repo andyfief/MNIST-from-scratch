@@ -1,79 +1,80 @@
+/* Global Styles */
 html {
   margin: 0;
   padding: 0;
   height: 100%;
   background-color: rgb(1, 0, 12);
   color: white;
-  /* Remove overflow settings from html */
 }
 
 body {
   margin: 0;
   padding: 0;
-  /* Only set overflow on body, not on both html and body */
-  overflow-x: auto; /* Allow horizontal scrolling when needed */
-  overflow-y: auto; /* Allow vertical scrolling when needed */
-  
-  /* Prevent content from stretching */
-  min-height: 900px; /* Fixed minimum height based on your design */
+  overflow-x: auto; 
+  overflow-y: auto; 
+  min-height: 900px; 
 }
 
+/* Root and App Containers */
 #root {
   margin: 0 auto;
   padding-top: 40px;
   text-align: center;
-  width: 1600px; /* Fixed width */
-  min-height: 900px; /* Fixed minimum height */
+  width: 1600px; 
+  min-height: 900px; 
 }
 
 .App {
   position: relative;
-  height: 900px; /* Fixed height instead of 100vh */
-  width: 1600px; /* Fixed width */
-  overflow: visible; /* Allow scrolling */
+  height: 900px;
+  width: 1600px; 
+  overflow: visible; /* Allows scrolling */
 }
 
 .page-container {
-  width: 1600px; /* Fixed width */
+  width: 1600px;
   position: relative;
-  min-height: 900px; /* Fixed minimum height */
+  min-height: 900px; 
 }
 
+/* Background Image */
 .background-image {
   position: absolute;
   top: 0;
   left: 0;
-  width: 1600px; /* Fixed width */
-  height: 900px; /* Fixed height instead of 100vh */
+  width: 1600px;
+  height: 900px; 
   background-image: url('../../monitors2.png');
-  background-size: contain; /* Changed from cover to contain */
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center top;
-  z-index: 2; /* Higher z-index to be above the screen elements */
+  z-index: 2; /* Above the screen elements */
   pointer-events: none;
 }
 
+/* Screens */
 .canvas-screen {
-  width: 400px; /* Fixed width in pixels */
-  height: 300px; /* Fixed height in pixels */
+  width: 400px;
+  height: 300px;
   position: absolute;
-  top: 375px; /* Fixed position in pixels (43% of 900px) */
-  left: 424px; /* Fixed position instead of percentage */
+  top: 375px;
+  left: 424px;
   background-color: rgb(93, 212, 248);
   padding-top: 20px;
-  z-index: 1; /* Below the background image, as requested */
+  z-index: 1; /* Below the background image */
 }
 
 .prediction-screen {
-  width: 400px; /* Fixed width in pixels */
-  height: 300px; /* Fixed height in pixels */
-  top: 380px; /* Fixed position in pixels (35% of 900px) */
-  right: 352px; /* Fixed position instead of percentage */
+  width: 400px;
+  height: 300px;
+  top: 380px;
+  right: 352px;
   position: absolute;
   background-color: rgb(93, 212, 248);
-  z-index: 1; /* Below the background image, as requested */
+  z-index: 1; /* Below the background image */
 }
 
+/* Prediction Text */
 .prediction_welcome {
   font-family: 'Courier New', monospace;
   color: rgb(19, 0, 233);
@@ -96,6 +97,7 @@ body {
   color: rgb(19, 0, 233);
 }
 
+/* Probabilities */
 .probabilities {
   width: 83%;
   height: 10%;
@@ -141,6 +143,7 @@ body {
   color: rgb(19, 0, 233);
 }
 
+/* Information Section */
 .information-section {
   width: 60%;
   margin: 40px auto;
@@ -152,7 +155,7 @@ body {
   font-family: 'Courier New', monospace;
   text-align: left;
   z-index: 2;
-  position: relative; /* Ensure proper z-index stacking */
+  position: relative; /* important for z -index stacking */
 }
 
 .information-section h3 {
@@ -176,15 +179,12 @@ body {
 .information-section .tipsLines {
   text-align: center;
 }
-.information-section #tutorialLine {
-  text-align: center;
-}
 
-/* Blinking cursor effect */
+/* Blinking Cursor Effect */
 .information-section::after {
   content: "_";
   display: inline-block;
-  margin-left: 5px;
+  margin-left: 2px;
   animation: blink 1s step-start infinite;
 }
 
@@ -194,6 +194,7 @@ body {
   }
 }
 
+/* Scroll Down Indicator */
 .scroll-down-indicator {
   display: grid;
   position: absolute;
@@ -229,11 +230,12 @@ body {
   }
 }
 
+/* Error Styles */
 .error {
   color: #ff6b6b;
 }
 
-/* Media query to hide scrollbars on larger screens */
+/* Media Queries */
 @media screen and (min-width: 1650px) {
   body {
     overflow-x: hidden; /* Hide horizontal scrollbar on larger screens */

@@ -48,28 +48,16 @@ function App() {
         {error && <p className="error">{error}</p>}
     </div>
       <div className="information-section">
-          <p id = 'tutorialLine'>Draw a digit in the left screen and click "Predict" to see the neural network classify your handwriting!</p>
           <h3 id='tips'>Tips</h3>
           <p className = 'tipsLines'> Draw a large number.</p>
           <p className = 'tipsLines'> Use a straight |, without a base.</p>
           <p className = 'tipsLines'> Use an empty 0, without the slash.</p>
           <h3>About the MNIST Dataset</h3>
           <p>The MNIST database is a large collection of handwritten digits used for training various image processing systems.</p>
-          <p>It contains 70,000 images of handwritten digits (0-9) and each image is a 28×28 grayscale pixel grid. </p>
-          <p>This page is an interface for a neural network written from scratch- no frameworks like PyTorch or TensorFlow were used.</p>
-          <h3>About the Nueral Network</h3>
-          <p>The Neural Network is written entirely from scratch in Python and Numpy, down to the matrix multiplications and derivatives.
-            It is a fully connected feedforward deep neural network, consisting of 3 layers. The input layer has 784 neurons: one for each pixel in the 28x28 grid.
-            There are two hidden layers with 128 and 64 neurons respectively, 
-            and an output layer with 10 neurons corresponding to the digit classes 0–9. The network uses the sigmoid activation function 
-            in the hidden layers and softmax in the output layer to produce probability distributions. During training, it performs forward 
-            propagation to compute predictions and backward propagation to update the weights via gradient descent. Weight updates are driven by 
-            the gradients of the loss function with respect to each layer’s weights, allowing the network to improve accuracy over multiple epochs.
-          </p>
-          <h3>About the Frontend and Preprocessing</h3>
-          <p>
-            The grid on the left screen is made with a simple HTML canvas. When the user presses submit, the 
-          </p>
+          <p>It contains 70,000 images of handwritten digits (0-9), where each image is a 28×28 grayscale pixel grid. </p>
+          <p>This page is an interface for a neural network written from scratch in Python - no frameworks like PyTorch or TensorFlow were used.</p>
+          <p> The submitted image is processed to match the dataset more accurately, and is then fed through the neural network to make a prediction.</p>
+          <p> The neural network's accuracy after being tested on the dataset is 91%.</p>
       </div>
     </div>
   );
