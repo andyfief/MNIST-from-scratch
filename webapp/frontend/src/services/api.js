@@ -1,6 +1,8 @@
+const API_URL = '/api'; 
+
 export const predictDigit = async (imageData) => {
     try {
-        const response = await fetch('/predict', {
+        const response = await fetch(`${API_URL}/predict`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
