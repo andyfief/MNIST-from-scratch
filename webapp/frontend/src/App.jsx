@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Canvas from './components/Canvas';
 import PredictionResult from './components/PredictionResult';
 import ScrollDownPtr from './components/ScrollDownPtr';
+import CodeSnippet from './components/Snippet';
 import{ predictDigit } from './services/api';
 import './styles/App.css';
 
@@ -40,11 +41,10 @@ function App() {
           {prediction && <PredictionResult result={prediction} />}
         </div>
         <div className="background-image">
-        <div className="scrollDown">
-            <ScrollDownPtr />
+          <div className="scrollDown">
+              <ScrollDownPtr />
           </div>
         </div>
-        
         {error && <p className="error">{error}</p>}
     </div>
       <div className="information-section">
@@ -58,6 +58,16 @@ function App() {
           <p>This page is an interface for a neural network written from scratch in Python - no frameworks like PyTorch or TensorFlow were used.</p>
           <p> The submitted image is processed to match the dataset more accurately, and is then fed through the neural network to make a prediction.</p>
           <p> The neural network's accuracy after being tested on the dataset is 91%.</p>
+      </div>
+      <div className="snippet">
+        <h3>Model Training Source Code</h3>
+        <span className="githublink">
+          Or visit the{' '}
+          <a href="https://github.com/andyfief/MNIST-from-scratch" style={{ textDecoration: 'underline' }}>
+            GitHub Repository
+          </a>
+        </span>
+            <CodeSnippet />
       </div>
     </div>
   );
