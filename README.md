@@ -54,7 +54,7 @@ npm install
 ```
 
 # Usage
-## 1 Converting Ubyte to CSV
+## 1. Converting Ubyte to CSV
 CSV files are required. To convert ubyte files to CSV, use Convert_CSV.py:
 
 Include the path to the ubyte files at the top of the script:
@@ -74,7 +74,7 @@ In the auxillary directory:
 python Convert_CSV.py
 ```
 
-## 2 Preprocess the Data
+## 2. Preprocess the Data
 While training the model on raw MNIST data is viable and reasonable, preprocessing the model results in a higher accuracy. 
 When loading a model in the front end, it is highly recommended that the weights are learned on preprocessed data, as the same
 preprocessing pipeline is used in the backend API.
@@ -89,7 +89,7 @@ In the auxillary directory:
 python CleanIMG.py
 ```
 
-## Train the Model
+## 3. Train the Model
 Include input file paths for training and testing csv files at the top of model.py:
 ```bash
 train_file = open('../MNIST_Data/cleanTrain.csv', 'r')
@@ -104,7 +104,7 @@ Outputs are saved by default to models/model_weights.pkl. This output file can b
 def save_model_weights(model, outfile='../models/model_weights.pkl'):
 ```
 
-## Using the webapp locally
+## 4. Using the webapp locally
 Start the frontend:
 ```bash
 cd ./webapp/frontend
@@ -115,3 +115,18 @@ Start the backend:
 cd ./webapp/backend
 python app.py
 ```
+
+# Contributing
+## Contributions are welcome!
+1. Fork the repo
+
+2. Create a new branch: git checkout -b feature/your-feature
+
+3. Commit your changes
+
+4. Push to your branch
+
+5. Open a pull request
+
+# License
+MIT © 2025 Andrew Fief github.com/andyfief/MNIST-from-scratch
