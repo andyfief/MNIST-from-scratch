@@ -3,11 +3,11 @@ import time
 import numpy as np
 import pickle
 
-train_file = open('./MNIST_Data/train.csv', 'r')
+train_file = open('../MNIST_Data/cleanTrain.csv', 'r')
 train_list = train_file.readlines()
 train_file.close()
 
-test_file = open('./MNIST_Data/test.csv', 'r')
+test_file = open('../MNIST_Data/cleanTest.csv', 'r')
 test_list = test_file.readlines()
 test_file.close()
 
@@ -128,17 +128,17 @@ class DNN:
             print(f"Epoch {i+1}/{self.epochs}, Accuracy: {accuracy:.4f}")
 
 
-def save_model_weights(model, filename='mnist_model_weights.pkl'):
+def save_model_weights(model, outfile='../models/model_weights.pkl'):
     weights = {
         'W1': model.params['W1'],
         'W2': model.params['W2'],
         'W3': model.params['W3']
     }
 
-    with open(filename, 'wb') as f:
+    with open(outfile, 'wb') as f:
         pickle.dump(weights, f)
     
-    print(f"Model weights saved to {filename}")
+    print(f"Model weights saved to {outfile}")
     
 
 dnn = DNN(sizes=[784, 128, 64, 10], epochs=10, lr=0.001)
@@ -146,14 +146,14 @@ dnn.train(train_list, test_list)
 save_model_weights(dnn)
 
 """
-Epoch 1/10, Accuracy: 0.8535
-Epoch 2/10, Accuracy: 0.8749
-Epoch 3/10, Accuracy: 0.8828
-Epoch 4/10, Accuracy: 0.8867
-Epoch 5/10, Accuracy: 0.8926
-Epoch 6/10, Accuracy: 0.8973
-Epoch 7/10, Accuracy: 0.9027
-Epoch 8/10, Accuracy: 0.9075
-Epoch 9/10, Accuracy: 0.9119
-Epoch 10/10, Accuracy: 0.9154
+Epoch 1/10, Accuracy: 0.8644
+Epoch 2/10, Accuracy: 0.8838
+Epoch 3/10, Accuracy: 0.8913
+Epoch 4/10, Accuracy: 0.8984
+Epoch 5/10, Accuracy: 0.9062
+Epoch 6/10, Accuracy: 0.9099
+Epoch 7/10, Accuracy: 0.9146
+Epoch 8/10, Accuracy: 0.9187
+Epoch 9/10, Accuracy: 0.9213
+Epoch 10/10, Accuracy: 0.9237
 """

@@ -6,9 +6,10 @@ from flask_cors import CORS  # Enables Cross-Origin Resource Sharing for the API
 import base64  # For encoding/decoding base64 image data
 import io  # For handling byte streams
 from PIL import Image  # Python Imaging Library for image processing
-
-
 import pickle  # Serialization/deserialization for loading the model weights
+
+app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 # Add the current directory to sys.path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -74,13 +75,11 @@ class DNN:
         params['A3'] = self.softmax(params['Z3'])
 
         return params['A3']
+    
 
-app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
-
-# Initialize your model
+# Initialize model
 model = DNN(sizes=[784, 128, 64, 10])
-model.load_weights('./models/trinary_mnist_model_weights.pkl')  # Update with your actual weights file path
+model.load_weights('./models/model_weights.pkl') 
 
 def processRequest(image_data):
     # Remove the data URL prefix if present
@@ -98,81 +97,78 @@ def processRequest(image_data):
 
         return image_array
 
-def findCenter(image):
-            #image dimensions
-            height, width = image.shape
+def findCenter(img):
+    
+    #image dimensions
+    height, width = img.shape
 
-            # Top of drawn number (scan top-down)
-            top = 0
-            while top < height:
-                if any(image[top, i] > 0 for i in range(width)):
-                    break
-                top += 1
+    # Top of number (scan top-down)
+    top = 0
+    while top < height:
+        if any(img[top, i] > 0 for i in range(width)):
+            break
+        top += 1
 
-            # Bottom of drawn number (scan bottom-up)
-            bottom = height - 1
-            while bottom >= 0:
-                if any(image[bottom, i] > 0 for i in range(width)):
-                    break
-                bottom -= 1
+    # Bottom of number (scan bottom-up)
+    bottom = height - 1
+    while bottom >= 0:
+        if any(img[bottom, i] > 0 for i in range(width)):
+            break
+        bottom -= 1
 
-            # Left of drawn number (scan left-right)
-            left = 0
-            while left < width:
-                if any(image[i, left] > 0 for i in range(height)):
-                    break
-                left += 1
+    # Left of number (scan left-right)
+    left = 0
+    while left < width:
+        if any(img[i, left] > 0 for i in range(height)):
+            break
+        left += 1
 
-            # Right of drawn number (scan right-left)
-            right = width - 1
-            while right >= 0:
-                if any(image[i, right] > 0 for i in range(height)):
-                    break
-                right -= 1
+    # Right of number (scan right-left)
+    right = width - 1
+    while right >= 0:
+        if any(img[i, right] > 0 for i in range(height)):
+            break
+        right -= 1
 
-            #height of the drawn number
-            numberHeight = bottom - top
-            numberWidth = right - left
+    #height of the drawn number
+    numberHeight = bottom - top + 1
+    numberWidth = right - left + 1
 
-            # center of the drawn number
-            Y = top + (numberHeight / 2)
-            X = left + (numberWidth / 2)
+    target_y = (height - numberHeight) // 2
+    target_x = (width - numberWidth) // 2
 
-            imageCenter = [height / 2, width / 2]
-            numberCenter = [X, Y]
+    y_offset = target_y - top
+    x_offset = (target_x) - left
 
-            offset = [imageCenter[0] - numberCenter[0], imageCenter[1] - numberCenter[1]]
+    offset = [y_offset, x_offset]
 
-            return offset
+    return offset
 
-def shiftImage(image, offset):
-            height, width = image.shape
-            
-            # Create a new blank image
-            shifted_image = np.zeros((height, width), dtype=image.dtype)
-            
-            # Round offset values to nearest whole pixel (or 0.5 if needed)
-            x_offset = round(offset[0])
-            y_offset = round(offset[1])
-            
-            if x_offset >= 0:
-                src_x_range = slice(0, width - x_offset)
-                dst_x_range = slice(x_offset, width)
-            else:
-                src_x_range = slice(-x_offset, width)
-                dst_x_range = slice(0, width + x_offset)
-                
-            if y_offset >= 0:
-                src_y_range = slice(0, height - y_offset)
-                dst_y_range = slice(y_offset, height)
-            else:
-                src_y_range = slice(-y_offset, height)
-                dst_y_range = slice(0, height + y_offset)
-            
-            # Copy the relevant part of the image
-            shifted_image[dst_y_range, dst_x_range] = image[src_y_range, src_x_range]
+def shiftImage(img, offset):
+    height, width = img.shape
+    
+    shifted_img = np.zeros((height, width), dtype=img.dtype)
+    
+    y_offset = offset[0]
+    x_offset = offset[1]
+    
+    if x_offset >= 0:
+        src_x_range = slice(0, width - x_offset)
+        dst_x_range = slice(x_offset, width)
+    else:
+        src_x_range = slice(-x_offset, width)
+        dst_x_range = slice(0, width + x_offset)
+        
+    if y_offset >= 0:
+        src_y_range = slice(0, height - y_offset)
+        dst_y_range = slice(y_offset, height)
+    else:
+        src_y_range = slice(-y_offset, height)
+        dst_y_range = slice(0, height + y_offset)
+    
+    shifted_img[dst_y_range, dst_x_range] = img[src_y_range, src_x_range]
 
-            return shifted_image
+    return shifted_img
 
 def softenEdges(image):
       # get the trinary black-grey-white image format that we trained the model on. Grey values are edges.
@@ -188,15 +184,7 @@ def softenEdges(image):
                     if j - 1 >= 0 and image[i, j - 1] == 0:
                         image[i, j - 1] = 128
         return image
-
-def viewInFile(image_array):
-    #image_array = image_array.flatten() if needed
-    import csv
-    with open('view.csv', mode='w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(image_array)
      
-    
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
@@ -210,9 +198,7 @@ def predict():
             return jsonify({
                 'predicted_digit': 'none'
             })
-
-        #if(image_array.sum() < )
-
+        
         #find the offset of the image's center from the center of the grid
         offset = findCenter(image_array)
         

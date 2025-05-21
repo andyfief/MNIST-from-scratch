@@ -57,7 +57,7 @@ function App() {
           <p>It contains 70,000 images of handwritten digits (0-9), where each image is a 28×28 grayscale pixel grid. </p>
           <p>This page is an interface for a neural network written from scratch in Python - no frameworks like PyTorch or TensorFlow were used.</p>
           <p> The submitted image is processed to match the dataset more accurately, and is then fed through the neural network to make a prediction.</p>
-          <p> The neural network's accuracy after being tested on the dataset is 91%.</p>
+          <p> The neural network's accuracy after being tested on the dataset is 92%.</p>
       </div>
       <div className="snippet">
         <h3>Model Training Source Code</h3>

@@ -1,3 +1,5 @@
+# This file converts ubyte files to csv files.
+
 import matplotlib.pyplot as plt
 import time
 import numpy as np
