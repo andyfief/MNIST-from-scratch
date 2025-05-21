@@ -1,6 +1,1 @@
-**/*.csv
-**/node_modules/
-**/dockerfile
-**/docker-compose.*
-**/*.conf
-webapp/frontend/nginx/
+MNIST_Data/*.csv

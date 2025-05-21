@@ -1,9 +1,6 @@
-#!/usr/bin/env python3
-
-# RUN
-# python mnist_viewer.py --line 1
-# python mnist_viewer.py --line 0 --file 'shifted_images.csv' --output 'shifted.html'
-# python mnist_viewer.py --line 0 --file 'binary_centered_test.csv' --output 'sample.html'
+# To use, python mnist_viewer.py --line TargetImageLine --file TargetFile.csv --output OutPutFile.html
+# Then open the output file in a browser.
+# This works for any image data of length label + 784
 
 import csv
 import os
@@ -11,7 +8,6 @@ import sys
 import argparse
 
 def create_html_for_image(pixel_data, label, index, output_file='mnist_image.html'):
-    # Note the double curly braces in the CSS and JavaScript parts - these escape the braces
     html_template = """<!DOCTYPE html>
 <html lang="en">
 <head>
