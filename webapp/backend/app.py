@@ -168,6 +168,8 @@ def shiftImage(img, offset):
     
     shifted_img[dst_y_range, dst_x_range] = img[src_y_range, src_x_range]
 
+    return shifted_img
+
 def softenEdges(image):
       # get the trinary black-grey-white image format that we trained the model on. Grey values are edges.
         for i in range(28):
@@ -182,14 +184,7 @@ def softenEdges(image):
                     if j - 1 >= 0 and image[i, j - 1] == 0:
                         image[i, j - 1] = 128
         return image
-
-def viewInFile(image_array):
-    import csv
-    with open('view.csv', mode='w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(image_array)
      
-    
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
