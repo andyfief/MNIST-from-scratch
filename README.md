@@ -105,16 +105,40 @@ def save_model_weights(model, outfile='../models/model_weights.pkl'):
 ```
 
 ## 4. Using the webapp locally
-Start the frontend:
+Clone the repository.
 ```bash
-cd ./webapp/frontend
-npm run dev
+git clone https://github.com/andyfief/MNIST-from-scratch
 ```
-Start the backend:
+### Option 1: Using Docker
+Navigate to MNIST-from-scratch/webapp.
+
+Start the docker container:
 ```bash
-cd ./webapp/backend
+docker-compose build
+docker-compose up -d
+```
+Visit localhost:80.
+
+When finished,
+```bash
+docker-compose down
+```
+
+### Option 2: Running the servies seperately
+**Start the backend:**
+
+Navigate to MNIST-from-Scratch/webapp/backend
+```bash
 python app.py
 ```
+**Start the frontend:**
+
+In a new terminal, navigate to MNIST-from-Scratch/webapp/frontend
+```bash
+npm run dev
+```
+
+Visit localhost:3000.
 
 # Contributing
 ## Contributions are welcome!
