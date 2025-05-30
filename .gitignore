@@ -33,6 +33,3 @@ webapp/lerna-debug.log*
 *.njsproj
 *.sln
 *.sw?
-
-# Ignore backend Dockerfile
-webapp/backend/Dockerfile
