@@ -60,15 +60,21 @@ function App() {
           <p> The neural network's accuracy after being tested on the dataset is 92%.</p>
       </div>
       <div className="snippet">
-        <h3>Model Training Source Code</h3>
-        <span className="githublink">
-          Or visit the{' '}
-          <a href="https://github.com/andyfief/MNIST-from-scratch" style={{ textDecoration: 'underline' }}>
-            GitHub Repository
-          </a>
+        <h3>Learn More</h3>
+        <span className="links">
+            View the{' '}
+            <a href="../public/TechnicalDescription.pdf" target="_blank" style={{ textDecoration: 'underline' }}>
+              Technical Description
+            </a> {' '}
+            or visit the{' '}
+            <a href="https://github.com/andyfief/MNIST-from-scratch" style={{ textDecoration: 'underline' }}>
+              GitHub Repository
+            </a>
         </span>
+        <h3 className="snippetTitle">Model Training Source Code</h3>
             <CodeSnippet />
       </div>
+      
     </div>
   );
 }

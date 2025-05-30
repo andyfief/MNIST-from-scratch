@@ -263,6 +263,14 @@ a:visited {
   color: #00ff41;  /* same as normal to prevent color change */
 }
 
+.technicalDescription{
+  color: #00ff41;
+}
+
+.snippetTitle{
+  padding-top: 30px;
+}
+
 @keyframes bounce {
   0%, 100% {
     transform: translateY(0);
